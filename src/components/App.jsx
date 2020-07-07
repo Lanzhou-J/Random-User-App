@@ -1,29 +1,33 @@
-import React, {Component} from 'react';
+import React, { useState, useEffect }from 'react';
 import Userinput from './userinput';
 import Useroutput from './useroutput';
 // import { BrowserRouter, Route } from "react-router-dom";
 
-class App extends Component{
-  
-  state = {user:null, username:""}
+const App = () => {
+  const [user, setUser] = useState(null);
+  const [username, setUsername] = useState('');
 
-  async componentDidMount(){
-    console.log("componentDidMount")
-    const response = await fetch("https://randomuser.me/api/")
-    const data = await response.json()
-    console.log(data)
-    this.setState({user: data, username:data.results[0].name.first})
-  }
+  useEffect(()=>{
+    console.log("inside of useEffect")
+    async function getData(){
+      try{
+        const response = await fetch("https://randomuser.me/api/")
+        const data = await response.json()
+        setUser(data)
+        setUsername(data.results[0].name.first)
+      } catch(err){
+        console.log(err)
+      }
+    }
+    getData();
+  }, [])
 
-  handleChange = (input) => {
-    this.setState(state=>{
-      return {username: input}
-    });
+  const handleChange = (input) => {
+    setUsername(input);
   }
   
-  render(){
-    console.log("here")
-    const user = this.state?.user
+    console.log("here1")
+    // const user = this.state?.user
     if (user == null){
       return(
         <div></div>
@@ -37,13 +41,13 @@ class App extends Component{
         <h3>Gender : {info.gender}</h3>
         <h3>Email : {info.email}</h3>
         <img src={info.picture.medium} alt="profile"/>
-        <Userinput handleInput={this.handleChange}/>
-        <Useroutput name = {this.state.username}/>
+        <Userinput handleInput={handleChange}/>
+        <Useroutput name = {username}/>
         <Useroutput />
       </div>
     )
     }
-  }
+  
 }
 
 export default App;
