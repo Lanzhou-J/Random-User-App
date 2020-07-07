@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Useroutput (props){
+const Useroutput = (props) => {
 
     return(
       <div>

@@ -1,18 +1,16 @@
-import React, {Component} from 'react';
+import React from 'react';
 
-class Userinput extends Component {
+const Userinput = (props) => { 
 
-  onTextAreaChange = (event) => {
+  const onTextAreaChange = (event) => {
       // console.log(event.target.value)
-      this.props.handleInput(event.target.value);
+      props.handleInput(event.target.value);
   };
 
-  render(){
-      return(
+    return(
       <div>
-        <input type="text" onChange={this.onTextAreaChange}/>
+        <input type="text" onChange={onTextAreaChange}/>
       </div>
     )   
-  }
 }
 export default Userinput;
